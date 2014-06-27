@@ -1,32 +1,47 @@
 {
-   "projects": {
-      "iee-toolkit": {
+  "projects": {
+    "iee-toolkit": {
       "pom": "C:/wc/iee/7.6/iee-toolkit/pom.xml"
     },
     "iee": {
-        "pom": "C:/wc/iee/7.6/iee-toolkit/iee/pom.xml",
-        "parent": "iee-toolkit"
+      "pom": "C:/wc/iee/7.6/iee-toolkit/iee/pom.xml",
+      "parent": "iee-toolkit"
     },
     "iee-report": {
-        "pom": "C:/wc/iee/7.6/iee-toolkit/report/pom.xml",
-        "parent": "iee-toolkit"
+      "pom": "C:/wc/iee/7.6/iee-toolkit/report/pom.xml",
+      "parent": "iee-toolkit"
     },
     "iee-tutorial": {
-        "pom": "C:/wc/iee/7.6/iee-toolkit/tutorial/pom.xml",
-        "parent": "iee-toolkit"
+      "pom": "C:/wc/iee/7.6/iee-toolkit/tutorial/pom.xml",
+      "parent": "iee-toolkit"
+    },
+    "efa-components": {
+      "pom": "C:/wc/p2/15.6/efa-components/java/pom.xml"
+    },
+    "efa-dependencies": {
+      "pom": "C:/wc/p2/15.6/efa-components/java/efa-dependencies/pom.xml",
+      "parent": "efa-components"
+    },
+    "efa-pom": {
+      "pom": "C:/wc/p2/15.6/efa-pom/pom.xml"
     }
   },
+
   "projects-version": {
-    "iee-toolkit": {
-        "version": "7.6.4"
-    }
+    "iee-toolkit": "7.6.4",
+    "efa-components": "15.6.4"
   },
+
   "dependencies-version": {
     "pt.efacec.se.aut/bus-core": "8.1.1",
-    "pt.efacec.se.aut/bus-extensions": "2.1.0"
+    "pt.efacec.se.aut/bus-extensions": "2.1.1"
   },
-  "variables-value": {
-     "teste1": "value1",
-     "teste2": "xpto"
+
+  "properties": {
+    "currentVersion": "15.6.4",
+    "efaDependenciesVersion": "15.6.4",
+    "scadaEditorVersion": "3.1.3",
+    "ieeVersion": "7.6.4",
+    "ieeReport": "7.6.4"
   }
 }
