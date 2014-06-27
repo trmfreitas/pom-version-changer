@@ -3,34 +3,56 @@ pom-version-changer
 
 maven pom.xml version changer
 
-Configuration file config.json for some projects:
+How to install
+==============
 
+- Clone the repository and change the file config.json to suit your projects.
+- do "npm install" to install dependencies
+- execute with "node pom-version-changer.js"
+
+How to use
+==========
+
+
+Configuration file config.json for some projects:
 {
+  "paths": {
+    "iee": "C:/wc/iee/7.6/iee-toolkit",
+    "efa-components": "C:/wc/p2/15.6/efa-components/java",
+    "efa-pom": "C:/wc/p2/15.6/efa-pom/"
+  },
   "projects": {
     "iee-toolkit": {
-      "pom": "C:/wc/iee/7.6/iee-toolkit/pom.xml"
+      "pom": "pom.xml",
+      "basepath": "iee"
     },
     "iee": {
-      "pom": "C:/wc/iee/7.6/iee-toolkit/iee/pom.xml",
-      "parent": "iee-toolkit"
+      "pom": "iee/pom.xml",
+      "parent": "iee-toolkit",
+      "basepath": "iee"
     },
     "iee-report": {
-      "pom": "C:/wc/iee/7.6/iee-toolkit/report/pom.xml",
-      "parent": "iee-toolkit"
+      "pom": "report/pom.xml",
+      "parent": "iee-toolkit",
+      "basepath": "iee"
     },
     "iee-tutorial": {
-      "pom": "C:/wc/iee/7.6/iee-toolkit/tutorial/pom.xml",
-      "parent": "iee-toolkit"
+      "pom": "tutorial/pom.xml",
+      "parent": "iee-toolkit",
+      "basepath": "iee"
     },
     "efa-components": {
-      "pom": "C:/wc/p2/15.6/efa-components/java/pom.xml"
+      "pom": "pom.xml",
+      "basepath": "efa-components"
     },
     "efa-dependencies": {
-      "pom": "C:/wc/p2/15.6/efa-components/java/efa-dependencies/pom.xml",
-      "parent": "efa-components"
+      "pom": "efa-dependencies/pom.xml",
+      "parent": "efa-components",
+      "basepath": "efa-components"
     },
     "efa-pom": {
-      "pom": "C:/wc/p2/15.6/efa-pom/pom.xml"
+      "pom": "pom.xml",
+      "basepath": "efa-pom"
     }
   },
 
@@ -41,13 +63,13 @@ Configuration file config.json for some projects:
 
   "dependencies-version": {
     "pt.efacec.se.aut/bus-core": "8.1.1",
-    "pt.efacec.se.aut/bus-extensions": "2.1.1"
+    "pt.efacec.se.aut/bus-extensions": "2.1.1",
+    "pt.efacec.se.aut/iee": "7.6.4"
   },
 
   "properties": {
     "currentVersion": "15.6.4",
     "efaDependenciesVersion": "15.6.4",
-    "scadaEditorVersion": "3.1.3",
     "ieeVersion": "7.6.4",
     "ieeReport": "7.6.4"
   }

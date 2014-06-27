@@ -52,6 +52,7 @@ function getDependencyVersion(dependencies, groupdId, artifactId) {
   return dependencies[groupdId+"/"+artifactId];
 }
 
+
 function setDependencies(file, dependencies) {
   var data = fs.readFileSync(file, 'utf8');
   var xmlDoc= new jsxml.XML(data);
@@ -68,7 +69,7 @@ function setDependencies(file, dependencies) {
         if (version == "") {
           //no version
           return;
-        } else {
+        } else if (version.getValue().trim().substring(0,1)!="$"){ //also check if there was a variable there to not replace it
           var depVersion = getDependencyVersion(dependencies,groupId,artifactId);
           if (typeof depVersion != "undefined") {
             console.log(file + " setting dependency mng. version of " + groupId + "/"+artifactId + " to " + depVersion);
@@ -92,7 +93,7 @@ function setDependencies(file, dependencies) {
       if (version == "") {
         //no version
         return;
-      } else {
+      } else if (version.getValue().trim().substring(0,1)!="$"){ //also check if there was a variable there to not replace it
         var depVersion = getDependencyVersion(dependencies,groupId,artifactId);
         if (typeof depVersion != "undefined") {
           console.log(file + " setting dependency version of " + groupId + "/"+artifactId + " to " + depVersion);
@@ -120,6 +121,14 @@ VersionChanger.prototype.getProjectVersion = function(name) {
   return this.data.projects[name];
 }
 
+VersionChanger.prototype.getPath = function(basepath, relative) {
+  if (typeof basepath != "undefined" && basepath!="") {
+    return this.data.paths[basepath]+"/"+relative;
+  } else {
+    return relative;
+  }
+}
+
 VersionChanger.prototype.updateVersions = function() {
   var projects = this.data.projects;
   var projectsversion = this.data["projects-version"];
@@ -129,12 +138,12 @@ VersionChanger.prototype.updateVersions = function() {
   var version = projectsversion[projectname];
   console.log("Setting " + projectname + " to version " + version);
   // set pom version of the project
-  setVersion(project.pom, version);
+  setVersion(this.getPath(project.basepath,project.pom), version);
   // now update child projects
   for(var proj in projects) {
     if (projects[proj].parent == projectname) {
       console.log("Setting child project " + proj + " parent version to " + version);
-      setParentVersion(projects[proj].pom, version);
+      setParentVersion(this.getPath(projects[proj].basepath,projects[proj].pom), version);
     }
   }
 }
@@ -144,7 +153,7 @@ VersionChanger.prototype.updateProperties = function() {
   var properties = this.data["properties"];
 
   for (var projectname in projects) {
-    setProperties(projects[projectname].pom, properties);
+    setProperties(this.getPath(projects[projectname].basepath,projects[projectname].pom), properties);
   }
 }
 
@@ -153,9 +162,10 @@ VersionChanger.prototype.updateDependencies = function() {
   var dependenciesversion = this.data["dependencies-version"];
 
   for (var projectname in projects) {
-    setDependencies(projects[projectname].pom, dependenciesversion);
+    setDependencies(this.getPath(projects[projectname].basepath,projects[projectname].pom), dependenciesversion);
   }
 }
+
 
 fs.readFile('config.json', 'utf8', function (err, data) {
   if (err) {
