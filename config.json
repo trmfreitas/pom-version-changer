@@ -1,8 +1,3 @@
-pom-version-changer
-===================
-
-maven pom.xml version changer
-
 {
    "projects": {
       "iee-toolkit": {
@@ -35,13 +30,3 @@ maven pom.xml version changer
      "teste2": "xpto"
   }
 }
-
-
-projects: define projects and parents
-projects-version: configure version for each product that you want to manage
-dependencies-version: configure dependencies version which will be updated on each project that has them defined
-variables-value: configure variables value to be set on each project
-
-There is no need to configure variables and dependencies because they can be automatically found by parsing pom file.
-
-pom-verion-changer depends on node-jsxml version with createMainDocument change. There is a pull request for the change on main repo. You can grab the copy of jsxml.js from my repo.

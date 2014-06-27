@@ -1,0 +1,31 @@
+{
+  "name": "pom-version-changer",
+  "version": "0.0.0",
+  "description": "Maven pom.xml versions manager. Change version of pom, parent version and dependencies.",
+  "main": "pom-version-changer.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://trmfreitas@github.com/trmfreitas/pom-version-changer.git"
+  },
+  "keywords": [
+    "maven",
+    "pom",
+    "version",
+    "manager",
+    "changer",
+    "dependencies",
+    "pom.xml"
+  ],
+  "author": "Tiago Freitas",
+  "license": "Apache v2",
+  "bugs": {
+    "url": "https://github.com/trmfreitas/pom-version-changer/issues"
+  },
+  "homepage": "https://github.com/trmfreitas/pom-version-changer",
+  "dependencies": {
+    "node-jsxml": "*"
+  }
+}
