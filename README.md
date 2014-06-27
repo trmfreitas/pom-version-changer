@@ -1,20 +1,21 @@
+
 pom-version-changer
 ===================
 
 maven pom.xml version changer
 
 How to install
-==============
+--------------
 
 - Clone the repository and change the file config.json to suit your projects.
 - do "npm install" to install dependencies
 - execute with "node pom-version-changer.js"
 
 How to use
-==========
-
+----------
 
 Configuration file config.json for some projects:
+```
 {
   "paths": {
     "iee": "C:/wc/iee/7.6/iee-toolkit",
@@ -74,13 +75,13 @@ Configuration file config.json for some projects:
     "ieeReport": "7.6.4"
   }
 }
-
-
-projects: define projects and parents
-projects-version: configure version for each product that you want to manage
-dependencies-version: configure dependencies version which will be updated on each project that has them defined
-variables-value: configure variables value to be set on each project
+```
+**paths**: paths that you reference on projects by using *basepath*
+**projects**: define projects and parents
+**projects-version**: configure version for each product that you want to manage
+**dependencies-version**: configure dependencies version which will be updated on each project that has them defined
+**properties**: configure variables value to be set on each project
 
 There is no need to configure variables and dependencies because they can be automatically found by parsing pom file.
 
-pom-verion-changer depends on node-jsxml version with createMainDocument change. There is a pull request for the change on main repo. You can grab the copy of jsxml.js from my repo.
+**pom-verion-changer depends on node-jsxml version with createMainDocument change. There is a pull request for the change on main repo. You can grab the copy of jsxml.js from my repo.**
