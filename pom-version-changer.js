@@ -77,9 +77,30 @@ function setDependencies(file, dependencies) {
           }
         }
       });
-
-
     }
+  }
+
+  var node = xmlDoc.child('project').child('dependencies');
+
+  if (node != "") {
+    //get all children
+    var children = node.child("*");
+    children.each(function(dependency, index) {
+      var groupId = dependency.child("groupId");
+      var artifactId = dependency.child("artifactId");
+      var version = dependency.child("version");
+      if (version == "") {
+        //no version
+        return;
+      } else {
+        var depVersion = getDependencyVersion(dependencies,groupId,artifactId);
+        if (typeof depVersion != "undefined") {
+          console.log(file + " setting dependency version of " + groupId + "/"+artifactId + " to " + depVersion);
+          dependency.child("version").setValue(depVersion);
+          changed = true;
+        }
+      }
+    });
   }
 
   if (changed) {
