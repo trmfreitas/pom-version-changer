@@ -1,6 +1,6 @@
 {
   "name": "pom-version-changer",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Maven pom.xml versions manager. Change version of pom, parent version and dependencies.",
   "main": "pom-version-changer.js",
   "scripts": {
