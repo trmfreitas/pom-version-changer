@@ -113,7 +113,7 @@ PVC.setDependencies = function (file, dependencies) {
           //no version
           return;
         } else if (version.getValue().trim().substring(0,1)!="$"){ //also check if there was a variable there to not replace it
-          var depVersion = getDependencyVersion(dependencies,groupId,artifactId);
+          var depVersion = PVC.getDependencyVersion(dependencies,groupId,artifactId);
           if (typeof depVersion != "undefined") {
             console.log(file + " setting dependency mng. version of " + groupId + "/"+artifactId + " to " + depVersion);
             dependency.child("version").setValue(depVersion);
@@ -137,7 +137,7 @@ PVC.setDependencies = function (file, dependencies) {
         //no version
         return;
       } else if (version.getValue().trim().substring(0,1)!="$"){ //also check if there was a variable there to not replace it
-        var depVersion = getDependencyVersion(dependencies,groupId,artifactId);
+        var depVersion = PVC.getDependencyVersion(dependencies,groupId,artifactId);
         if (typeof depVersion != "undefined") {
           console.log(file + " setting dependency version of " + groupId + "/"+artifactId + " to " + depVersion);
           dependency.child("version").setValue(depVersion);
@@ -180,7 +180,7 @@ VersionChanger.prototype.backupFiles = function() {
 
   for (var projectname in projects) {
     var project = this.getProject(projectname);
-    backup(getPath(project.basepath, project.pom));
+    PVC.backup(this.getPath(project.basepath, project.pom));
   }
 
 }
@@ -209,7 +209,7 @@ VersionChanger.prototype.updateProperties = function() {
   var properties = this.data["properties"];
 
   for (var projectname in projects) {
-    setProperties(this.getPath(projects[projectname].basepath,projects[projectname].pom), properties);
+    PVC.setProperties(this.getPath(projects[projectname].basepath,projects[projectname].pom), properties);
   }
 }
 
