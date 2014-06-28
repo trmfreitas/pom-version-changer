@@ -1,9 +1,52 @@
 var jsxml = require("node-jsxml");
-var fs = require('fs');
-
 jsxml.XML.setSettings({ignoreComments : false, ignoreProcessingInstructions : false, createMainDocument: true});
 
-function setVersion(file, version) {
+var fs = require('fs');
+var argv = require('minimist')(process.argv.slice(2));
+
+function PVC() {};
+
+PVC.help = function (){
+  console.log("");
+  console.log("pom-version-changer - manage maven pom versions");
+  console.log("  node pom-version-changer [--help] [--backup] [--config=file]");
+  console.log("");
+  console.log(" All optional arguments.");
+  console.log(" Specify --backup to create a backup file on the same directory as pom.xml.");
+  console.log(" Specify --config to define which config.json file to process.");
+  console.log("");
+}
+
+PVC.process = function(configFile, doBackups) {
+
+  fs.readFile(configFile, 'utf8', function (err, data) {
+    if (err) {
+      console.log('Error: ' + err);
+      return;
+    }
+
+    data = JSON.parse(data);
+
+    if (typeof data.projects == "undefined")  {
+      console.log("No projects are defined in config.json");
+    } else {
+      var vc = new VersionChanger(data, doBackups);
+      if (doBackups) {
+        vc.backupFiles();
+      }
+      vc.updateVersions();
+      vc.updateProperties();
+      vc.updateDependencies();
+    }
+  });
+
+}
+
+PVC.backup = function(file) {
+  fs.writeFileSync(file+".bak", fs.readFileSync(file));
+}
+
+PVC.setVersion = function(file, version) {
   var data = fs.readFileSync(file, 'utf8');
   var xmlDoc= new jsxml.XML(data);
   var node = xmlDoc.child('project').child('version');
@@ -14,7 +57,7 @@ function setVersion(file, version) {
 
 }
 
-function setParentVersion(file, version) {
+PVC.setParentVersion = function (file, version) {
   var data = fs.readFileSync(file, 'utf8');
   var xmlDoc= new jsxml.XML(data);
   var node = xmlDoc.child('project').child('parent').child('version');
@@ -24,7 +67,7 @@ function setParentVersion(file, version) {
   }
 }
 
-function setProperties(file, properties) {
+PVC.setProperties = function(file, properties) {
   var data = fs.readFileSync(file, 'utf8');
   var xmlDoc= new jsxml.XML(data);
   var changed = false;
@@ -48,12 +91,12 @@ function setProperties(file, properties) {
   }
 }
 
-function getDependencyVersion(dependencies, groupdId, artifactId) {
+PVC.getDependencyVersion = function(dependencies, groupdId, artifactId) {
   return dependencies[groupdId+"/"+artifactId];
 }
 
 
-function setDependencies(file, dependencies) {
+PVC.setDependencies = function (file, dependencies) {
   var data = fs.readFileSync(file, 'utf8');
   var xmlDoc= new jsxml.XML(data);
   var changed = false;
@@ -109,8 +152,11 @@ function setDependencies(file, dependencies) {
   }
 }
 
-var VersionChanger = function(data) {
+//////////////////////////////////////////////////////////////
+
+var VersionChanger = function(data, doBackups) {
   this.data = data;
+  this.doBackups = doBackups;
 }
 
 VersionChanger.prototype.getProject = function(name) {
@@ -129,24 +175,34 @@ VersionChanger.prototype.getPath = function(basepath, relative) {
   }
 }
 
+VersionChanger.prototype.backupFiles = function() {
+  var projects = this.data.projects;
+
+  for (var projectname in projects) {
+    var project = this.getProject(projectname);
+    backup(getPath(project.basepath, project.pom));
+  }
+
+}
+
 VersionChanger.prototype.updateVersions = function() {
   var projects = this.data.projects;
   var projectsversion = this.data["projects-version"];
 
-  for (var projectname in projectsversion)
+  for (var projectname in projectsversion) {
     var project = this.getProject(projectname);
-  var version = projectsversion[projectname];
-  console.log("Setting " + projectname + " to version " + version);
-  // set pom version of the project
-  setVersion(this.getPath(project.basepath,project.pom), version);
-  // now update child projects
-  for(var proj in projects) {
-    if (projects[proj].parent == projectname) {
-      console.log("Setting child project " + proj + " parent version to " + version);
-      setParentVersion(this.getPath(projects[proj].basepath,projects[proj].pom), version);
+    var version = projectsversion[projectname];
+    console.log("Setting " + projectname + " to version " + version);
+    // set pom version of the project
+    PVC.setVersion(this.getPath(project.basepath,project.pom), version);
+    // now update child projects
+    for(var proj in projects) {
+      if (projects[proj].parent == projectname) {
+        console.log("Setting child project " + proj + " parent version to " + version);
+        PVC.setParentVersion(this.getPath(projects[proj].basepath,projects[proj].pom), version);
+      }
     }
-  }
-}
+  }}
 
 VersionChanger.prototype.updateProperties = function() {
   var projects = this.data.projects;
@@ -162,26 +218,15 @@ VersionChanger.prototype.updateDependencies = function() {
   var dependenciesversion = this.data["dependencies-version"];
 
   for (var projectname in projects) {
-    setDependencies(this.getPath(projects[projectname].basepath,projects[projectname].pom), dependenciesversion);
+    PVC.setDependencies(this.getPath(projects[projectname].basepath,projects[projectname].pom), dependenciesversion);
   }
 }
 
 
-fs.readFile('config.json', 'utf8', function (err, data) {
-  if (err) {
-    console.log('Error: ' + err);
-    return;
-  }
-
-  data = JSON.parse(data);
-
-  if (typeof data.projects == "undefined")  {
-    console.log("No projects are defined in config.json");
-  } else {
-    var vc = new VersionChanger(data);
-    vc.updateVersions();
-    vc.updateProperties();
-    vc.updateDependencies();
-  }
-
-});
+if (argv.help == true) {
+  PVC.help();
+  return;
+} else {
+  var configFile = typeof argv.config != "undefined" ? argv.config : "config.json";
+  PVC.process(configFile, (argv.backup == true));
+}

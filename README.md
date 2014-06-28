@@ -11,6 +11,45 @@ How to install
 - do "npm install" to install dependencies
 - execute with "node pom-version-changer.js"
 
+Why should you use it?
+----------------------
+
+If you have a lot projects that have dependencies between them and you would like to ease version management process this script should help you with it.
+
+Imagine that you have a big project with lots of subprojects and that those projects depend in some others also controlled by you.
+
+```
+  Project A
+    : version 1.2
+    - SubProject A.1
+      : version 1.2 from parent
+    - SubProject A.2
+      : version 1.2 from parent
+    - SubProject A.3
+      : version 1.2 from parent
+      - SubProject A.3.1
+        : version 1.2 from parent
+
+  Project B
+    : version 3.0.1
+    : depends on A.2
+    - SubProject B.1
+      : version 3.0.1 from parent
+    - SubProject B.2
+      : version 3.0.1 from parent
+      : depends on A.2
+
+  Project C
+    : version 2.0
+    : depends on A.2
+    : depends on B.1
+    : depends on B.2
+
+```
+To control versions for these projects you would have to change each pom.xml that has a version to point to the *new* updated version. (you could use *maven update child version* for project version and use *dependecies management*, but that is not easy enough).
+
+With pom-version-changer full control over your pom.xml versions is possible. With only one file (*config.json*) projects are defined, versions are set, dependencies´s versions are configured.
+
 How to use
 ----------
 
@@ -77,11 +116,21 @@ Configuration file config.json for some projects:
 }
 ```
 **paths**: paths that you reference on projects by using *basepath*
+
 **projects**: define projects and parents
+
 **projects-version**: configure version for each product that you want to manage
+
 **dependencies-version**: configure dependencies version which will be updated on each project that has them defined
+
 **properties**: configure variables value to be set on each project
 
-There is no need to configure variables and dependencies because they can be automatically found by parsing pom file.
+Run pom-version-changer
+-----------------------
 
-**pom-verion-changer depends on node-jsxml version with createMainDocument change. There is a pull request for the change on main repo. You can grab the copy of jsxml.js from my repo.**
+```
+  node pom-version-changer.js --config=config.json --backup
+```
+
+Options __config__ and __backup__ are optional. If backup is specified a pom.xml.bak will be created.
+

@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/trmfreitas/pom-version-changer",
   "dependencies": {
-    "node-jsxml": "*"
+    "node-jsxml": "git://github.com/trmfreitas/jsxml.git#master",
+    "minimist": "*"
   }
 }
