@@ -1,15 +1,35 @@
 
-pom-version-changer
-===================
+#pom-version-changer
 
-maven pom.xml version changer
+Maven pom.xml version changer, dependencies´s manager, properties changer.
 
 How to install
 --------------
 
-- Clone the repository and change the file config.json to suit your projects.
+#### Node Application
+- Clone the repository
+- cd into *app* folder
+- change the file config.json to suit your projects.
 - do "npm install" to install dependencies
 - execute with "node pom-version-changer.js"
+
+#### Node.js dependency
+
+- check folder *app* for a sample
+- add as a dependecy to your project *pom-version-changer*
+- add a require on your script
+```
+  var pvc = require("pom-version-changer");
+```
+- Execute changes with
+```
+  pvc.processFromFile(configFile, (argv.backup == true));
+
+  or
+
+  pvc.processFromFile(date, backupOption);
+    Data should be an object with the same structure as the JSON file
+```
 
 Why should you use it?
 ----------------------
@@ -125,8 +145,7 @@ Configuration file config.json for some projects:
 
 **properties**: configure variables value to be set on each project
 
-Run pom-version-changer
------------------------
+###Run pom-version-changer
 
 ```
   node pom-version-changer.js --config=config.json --backup
