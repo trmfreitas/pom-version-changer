@@ -17,29 +17,28 @@ PVC.help = function (){
   console.log("");
 }
 
-PVC.process = function(configFile, doBackups) {
 
-  fs.readFile(configFile, 'utf8', function (err, data) {
-    if (err) {
-      console.log('Error: ' + err);
-      return;
-    }
 
-    data = JSON.parse(data);
+PVC.processFromFile = function(configFile, doBackups) {
 
-    if (typeof data.projects == "undefined")  {
-      console.log("No projects are defined in config.json");
-    } else {
-      var vc = new VersionChanger(data, doBackups);
-      if (doBackups) {
-        vc.backupFiles();
-      }
-      vc.updateVersions();
-      vc.updateProperties();
-      vc.updateDependencies();
-    }
-  });
+  var data = fs.readFileSync(configFile, 'utf8');
+  data = JSON.parse(data);
 
+  if (typeof data.projects == "undefined")  {
+    console.log("No projects are defined in config.json");
+  } else {
+    PVC.process(data);
+  }
+}
+
+PVC.process = function(configData, doBackups) {
+  var vc = new VersionChanger(data, doBackups);
+  if (doBackups) {
+    vc.backupFiles();
+  }
+  vc.updateVersions();
+  vc.updateProperties();
+  vc.updateDependencies();
 }
 
 PVC.backup = function(file) {
@@ -222,11 +221,16 @@ VersionChanger.prototype.updateDependencies = function() {
   }
 }
 
+module.exports = {
+  processFromFile: PVC.processFromFile,
+  process: PVC.process
+}
 
+/*
 if (argv.help == true) {
   PVC.help();
-  return;
 } else {
   var configFile = typeof argv.config != "undefined" ? argv.config : "config.json";
-  PVC.process(configFile, (argv.backup == true));
+  PVC.processFromFile(configFile, (argv.backup == true));
 }
+*/

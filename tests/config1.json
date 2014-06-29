@@ -1,0 +1,33 @@
+{
+  "paths": {
+    "proj1path": "path1",
+    "proj2path": "path2"
+  },
+  "projects": {
+    "my-parent-app": {
+      "pom": "pom1.xml",
+      "basepath": "proj1path"
+    },
+    "my-app": {
+      "pom": "pom.xml",
+      "parent": "my-parent-app",
+      "basepath": "path2"
+    }
+  },
+
+  "projects-version": {
+    "my-parent-app": "1.7.5",
+    "my-app": "1.2.1"
+  },
+
+  "dependencies-version": {
+    "com.mycompany2.app/fourth-app": "4.0.1",
+    "com.mycompany2.app/first-app": "1.0.0",
+    "com.mycompany2.app/third-app": "3.0.0",
+    "com.mycompany.app/other-app": "2.0.1"
+  },
+
+  "properties": {
+    "project2.version": "1.6.4"
+  }
+}

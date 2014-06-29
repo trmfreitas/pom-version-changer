@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- this is a comment before -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>my-parent-app</artifactId>
+  <version>1.0.0</version>
+  
+  <properties>
+    <encoding>ISO-8859-1</encoding>
+    <java.version>1.6</java.version>
+    <project2.version>2.0</project2.version>
+  </properties>
+  
+  <!-- this is a comment inside1 -->
+
+  <dependencies>
+    <dependency>
+      <groupId>com.mycompany2.app</groupId>
+      <artifactId>fourth-app</artifactId>
+      <version>4.3</version>
+    </dependency>
+  </dependencies>
+  <dependecyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>com.mycompany.app</groupId>
+      <artifactId>other-app</artifactId>
+      <version>3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.mycompany2.app</groupId>
+      <artifactId>second-app</artifactId>
+      <version>${project2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.mycompany2.app</groupId>
+      <artifactId>third-app</artifactId>
+      <version>3.0</version>
+    </dependency>
+  </dependencies>
+  </dependecyManagement>
+</project>
