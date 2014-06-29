@@ -1,6 +1,6 @@
 {
   "name": "pom-version-changer-app",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Application Maven Pom Version Changer",
   "main": "pom-version-changer.js",
   "scripts": {
