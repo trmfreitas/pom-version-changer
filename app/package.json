@@ -17,6 +17,6 @@
   "license": "Apache v2",
   "dependencies": {
      "minimist": "*",
-     "pom-version-changer": "http://github.com/trmfreitas/pom-version-changer.git"
+     "pom-version-changer": "git://github.com/trmfreitas/pom-version-changer.git#node_module_creation_and_tests"
   }
 }
