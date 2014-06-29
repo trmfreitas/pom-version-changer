@@ -20,14 +20,14 @@ PVC.help = function (){
 
 
 PVC.processFromFile = function(configFile, doBackups) {
-console.log("here");
+
   var data = fs.readFileSync(configFile, 'utf8');
   data = JSON.parse(data);
 
   if (typeof data.projects == "undefined")  {
     console.log("No projects are defined in config.json");
   } else {
-    PVC.process(data);
+    PVC.process(data, doBackups);
   }
 }
 

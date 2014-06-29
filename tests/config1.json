@@ -5,11 +5,11 @@
   },
   "projects": {
     "my-parent-app": {
-      "pom": "pom1.xml",
+      "pom": "pom.xml",
       "basepath": "proj1path"
     },
     "my-app": {
-      "pom": "pom2.xml",
+      "pom": "pom.xml",
       "parent": "my-parent-app",
       "basepath": "proj2path"
     }

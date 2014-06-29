@@ -1,1 +1,4 @@
 node_modules/
+tests/coverage.html
+tests/path1/pom.xml
+tests/path2/pom.xml
