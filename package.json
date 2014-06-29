@@ -4,7 +4,7 @@
   "description": "Maven pom.xml versions manager. Change version of pom, parent version and dependencies.",
   "main": "pom-version-changer.js",
   "scripts": {
-    "test": "npm test"
+    "test": "node --debug ./node_modules/.bin/grunt test"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,8 @@
   },
   "devDependencies": {
     "chai": "^1.9.1",
+    "grunt": "^0.4.5",
+    "grunt-mocha-test": "^0.11.0",
     "mocha": "^1.20.1"
   }
 }

@@ -9,9 +9,9 @@
       "basepath": "proj1path"
     },
     "my-app": {
-      "pom": "pom.xml",
+      "pom": "pom2.xml",
       "parent": "my-parent-app",
-      "basepath": "path2"
+      "basepath": "proj2path"
     }
   },
 

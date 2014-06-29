@@ -4,7 +4,7 @@ var should = require('chai').should(),
 
 describe('#processFromFile', function() {
   it('checks that processing json from file is working OK', function() {
-    processFromFile("config1.json", false);
+    pvc.processFromFile("config1.json", false);
   });
 });
 

@@ -20,7 +20,7 @@ PVC.help = function (){
 
 
 PVC.processFromFile = function(configFile, doBackups) {
-
+console.log("here");
   var data = fs.readFileSync(configFile, 'utf8');
   data = JSON.parse(data);
 
@@ -31,7 +31,7 @@ PVC.processFromFile = function(configFile, doBackups) {
   }
 }
 
-PVC.process = function(configData, doBackups) {
+PVC.process = function(data, doBackups) {
   var vc = new VersionChanger(data, doBackups);
   if (doBackups) {
     vc.backupFiles();
@@ -168,7 +168,13 @@ VersionChanger.prototype.getProjectVersion = function(name) {
 
 VersionChanger.prototype.getPath = function(basepath, relative) {
   if (typeof basepath != "undefined" && basepath!="") {
-    return this.data.paths[basepath]+"/"+relative;
+    var knownPath =  this.data.paths[basepath];
+    if (typeof knownPath == "undefined") {
+      //console.err("unknown basepath " + basepath);
+      throw "unknown basepath " + basepath;
+    } else {
+      return knownPath+"/"+relative;
+    }
   } else {
     return relative;
   }
