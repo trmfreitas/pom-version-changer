@@ -17,6 +17,6 @@
   "license": "Apache v2",
   "dependencies": {
      "minimist": "*",
-     "pom-version-changer": "^0.2.0"
+     "pom-version-changer": "^0.2.1"
   }
 }
