@@ -5,7 +5,7 @@ require('blanket')({
   });
 
 var should = require('chai').should(),
-    pvc = require('../pom-version-changer.js'),
+    pvc = require('../module.js'),
     jsxml = require('node-jsxml');
 
 var fs = require('fs');

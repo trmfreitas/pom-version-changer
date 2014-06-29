@@ -2,7 +2,7 @@
   "name": "pom-version-changer",
   "version": "0.1.0",
   "description": "Maven pom.xml versions manager. Change version of pom, parent version and dependencies.",
-  "main": "pom-version-changer.js",
+  "main": "module.js",
   "scripts": {
     "test": "./node_modules/.bin/grunt"
   },
@@ -26,8 +26,7 @@
   },
   "homepage": "https://github.com/trmfreitas/pom-version-changer",
   "dependencies": {
-    "node-jsxml": "0.6.0",
-    "minimist": "*"
+    "node-jsxml": "^0.6.0"
   },
   "devDependencies": {
     "blanket": "^1.1.6",
