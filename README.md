@@ -27,7 +27,7 @@ How to install
 
   or
 
-  pvc.processFromFile(date, backupOption);
+  pvc.process(data, backupOption);
     Data should be an object with the same structure as the JSON file
 ```
 
